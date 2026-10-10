@@ -1,23 +1,4 @@
-// ============================================
-// ADD YOUR CONSPIRACY THEORIES HERE
-// ============================================
-// Copy the template below and fill it in:
-//
-//   {
-//     id: 4,
-//     title: "Theory Name",
-//     category: "government",
-//     summary: "A short one-liner.",
-//     details: "Full write-up.",
-//     evidence: ["Point one", "Point two"],
-//     status: "unproven",     // unproven | debunked | plausible | confirmed
-//     dateAdded: "2026-10-10",
-//   },
-//
-// Then save, commit, push — the site rebuilds automatically.
-// ============================================
-
-const theories = [
+const defaultTheories = [
   {
     id: 1,
     title: "Area 51 and Alien Technology",
@@ -63,6 +44,55 @@ const theories = [
     status: "confirmed",
     dateAdded: "2026-10-10",
   },
+  {
+    id: 4,
+    title: "9/11 Inside Job",
+    category: "government",
+    summary: "The September 11 attacks were orchestrated or deliberately allowed by elements within the US government.",
+    details: "The 9/11 conspiracy theory alleges that the attacks on the World Trade Center and Pentagon were not solely the work of al-Qaeda but involved complicity from within the US government. The \"9/11 Truth\" movement points to the collapse of World Trade Center Building 7, which was not hit by a plane but fell in what some describe as a controlled demolition pattern. They also cite the Project for the New American Century document that called for a \"new Pearl Harbor\" to justify military expansion, insider trading on airline stocks before the attacks, and the unprecedented failure of NORAD to intercept any of the four hijacked aircraft. The 9/11 Commission Report has been criticised for omissions and inconsistencies by both conspiracy theorists and some of the commissioners themselves.",
+    evidence: [
+      "WTC Building 7 collapsed despite never being hit by a plane",
+      "Put options on airline stocks spiked in the days before the attacks",
+      "NORAD failed to intercept any of the four hijacked planes",
+      "The 9/11 Commission co-chairs said the commission was 'set up to fail'",
+      "Molten steel found in the rubble weeks after collapse",
+    ],
+    status: "unproven",
+    dateAdded: "2026-10-10",
+  },
+  {
+    id: 5,
+    title: "Bohemian Grove",
+    category: "government",
+    summary: "The world's most powerful men gather in a Californian redwood forest for secret rituals and policy decisions.",
+    details: "Every July, the Bohemian Club hosts a two-week encampment at Bohemian Grove, a 2,700-acre campground in Monte Rio, California. Members and guests have included US presidents, military leaders, corporate executives, and media moguls. The event opens with the \"Cremation of Care\" ceremony, in which a robed group burns an effigy before a 40-foot stone owl. Conspiracy theorists allege the gathering is where global policy is secretly decided outside any democratic process, that occult rituals take place, and that it functions as a shadow government meeting ground. In 2000, journalist Alex Jones infiltrated the grove and filmed the Cremation of Care ceremony, bringing it to wider public attention. Former president Richard Nixon once described it as \"the most faggy goddamn thing you could ever imagine.\"",
+    evidence: [
+      "The Cremation of Care ritual was filmed by Alex Jones in 2000",
+      "Attendees include sitting presidents, defence secretaries, and bank CEOs",
+      "The Manhattan Project was allegedly conceived at a 1942 Bohemian Grove meeting",
+      "No press allowed — all proceedings are off the record",
+      "Richard Nixon and Henry Kissinger were both members",
+    ],
+    status: "plausible",
+    dateAdded: "2026-10-10",
+  },
+  {
+    id: 6,
+    title: "The Book of Enoch Cover-Up",
+    category: "history",
+    summary: "The Book of Enoch was deliberately removed from the Bible because it reveals too much about fallen angels, the Nephilim, and forbidden knowledge.",
+    details: "The Book of Enoch is an ancient Jewish text attributed to Enoch, the great-grandfather of Noah. It describes in vivid detail the Watchers — fallen angels who descended to Earth, took human wives, and produced the Nephilim, a race of giants. The text also claims these angels taught humanity forbidden arts: weapon-making, sorcery, astrology, and cosmetics. Despite being quoted in the New Testament Book of Jude and clearly influential on early Christian theology, the Book of Enoch was excluded from the biblical canon by the Council of Laodicea in 364 AD. Conspiracy theorists argue the book was suppressed because its detailed account of angelic rebellion, hybrid bloodlines, and pre-flood civilisation threatened the established religious and political order. The Ethiopian Orthodox Church is the only major denomination that still includes it in their canon. The Dead Sea Scrolls discovery in 1947 confirmed the text's antiquity, with fragments dating to the 3rd century BC.",
+    evidence: [
+      "Quoted directly in the canonical Book of Jude (verses 14-15)",
+      "Excluded from the biblical canon at the Council of Laodicea in 364 AD",
+      "Dead Sea Scrolls contained multiple copies, confirming its importance",
+      "Describes the Nephilim — giants born from angels and human women",
+      "The Ethiopian Orthodox Church still considers it canonical scripture",
+      "Details forbidden knowledge given to humanity by fallen angels",
+    ],
+    status: "plausible",
+    dateAdded: "2026-10-10",
+  },
 ];
 
-export default theories;
+export default defaultTheories;
