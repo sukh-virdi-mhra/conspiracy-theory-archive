@@ -38,10 +38,15 @@ const CATEGORIES = [
   "science",
   "religion",
   "sea",
-  "Jews",
+  "jews",
   "other",
 ];
 const STATUSES = ["unproven", "debunked", "plausible", "confirmed"];
+
+function getCategories(theory) {
+  if (Array.isArray(theory.categories)) return theory.categories;
+  return theory.category ? [theory.category] : [];
+}
 
 function PushPin({ index }) {
   return <div className={`pin ${PIN_COLORS[index % PIN_COLORS.length]}`} />;
@@ -69,7 +74,7 @@ function NoteCard({ theory, index, onClick, onDelete }) {
       <RedString index={index} />
       <div className={`note-paper ${paperStyle}`} onClick={onClick}>
         <span className={`note-badge ${theory.status}`}>{theory.status}</span>
-        <div className="note-category">{theory.category}</div>
+        <div className="note-category">{getCategories(theory).join(", ")}</div>
         <div className="note-title">{theory.title}</div>
         <div className="note-summary">{theory.summary}</div>
         <div className="note-date">{theory.dateAdded}</div>
@@ -103,7 +108,7 @@ function Modal({ theory, onClose, onEdit }) {
           &times;
         </button>
         <h2>{theory.title}</h2>
-        <div className="note-category">{theory.category}</div>
+        <div className="note-category">{getCategories(theory).join(", ")}</div>
         <div style={{ margin: "6px 0 12px" }}>
           <span
             className={`note-badge ${theory.status}`}
@@ -143,7 +148,9 @@ function Modal({ theory, onClose, onEdit }) {
 function TheoryForm({ initial, onSubmit, onCancel }) {
   const editing = !!initial;
   const [title, setTitle] = useState(initial?.title || "");
-  const [category, setCategory] = useState(initial?.category || "government");
+  const [categories, setCategories] = useState(
+    initial ? getCategories(initial) : ["government"],
+  );
   const [summary, setSummary] = useState(initial?.summary || "");
   const [details, setDetails] = useState(initial?.details || "");
   const [evidence, setEvidence] = useState(
@@ -154,11 +161,12 @@ function TheoryForm({ initial, onSubmit, onCancel }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!title.trim() || !summary.trim() || submitting) return;
+    if (!title.trim() || !summary.trim() || !categories.length || submitting)
+      return;
     setSubmitting(true);
     await onSubmit({
       title: title.trim(),
-      category,
+      categories,
       summary: summary.trim(),
       details: details.trim() || summary.trim(),
       evidence: evidence.trim()
@@ -200,20 +208,30 @@ function TheoryForm({ initial, onSubmit, onCancel }) {
             />
           </label>
           <div className="form-row">
-            <label className="form-label">
-              Category
-              <select
-                className="form-select"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {CATEGORIES.filter((c) => c !== "all").map((c) => (
-                  <option key={c} value={c}>
-                    {c.charAt(0).toUpperCase() + c.slice(1)}
-                  </option>
+            <fieldset className="form-label category-options">
+              <legend>Categories *</legend>
+              <div className="category-checkboxes">
+                {CATEGORIES.filter((c) => c !== "all").map((categoryOption) => (
+                  <label key={categoryOption} className="category-option">
+                    <input
+                      type="checkbox"
+                      checked={categories.includes(categoryOption)}
+                      onChange={(e) =>
+                        setCategories((current) =>
+                          e.target.checked
+                            ? [...current, categoryOption]
+                            : current.filter(
+                                (category) => category !== categoryOption,
+                              ),
+                        )
+                      }
+                    />
+                    {categoryOption.charAt(0).toUpperCase() +
+                      categoryOption.slice(1)}
+                  </label>
                 ))}
-              </select>
-            </label>
+              </div>
+            </fieldset>
             <label className="form-label">
               Status
               <select
@@ -263,7 +281,11 @@ function TheoryForm({ initial, onSubmit, onCancel }) {
             <button type="button" className="btn-cancel" onClick={onCancel}>
               Cancel
             </button>
-            <button type="submit" className="btn-submit" disabled={submitting}>
+            <button
+              type="submit"
+              className="btn-submit"
+              disabled={submitting || !categories.length}
+            >
               {submitting ? "Saving..." : editing ? "Save Changes" : "Pin It"}
             </button>
           </div>
@@ -293,7 +315,7 @@ export default function App() {
 
   const query = search.toLowerCase().trim();
   const filtered = theories.filter((t) => {
-    const matchFilter = filter === "all" || t.category === filter;
+    const matchFilter = filter === "all" || getCategories(t).includes(filter);
     const matchSearch =
       !query ||
       t.title.toLowerCase().includes(query) ||
