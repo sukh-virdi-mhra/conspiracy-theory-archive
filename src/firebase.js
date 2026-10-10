@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import {
-  getFirestore, collection, getDocs, addDoc, deleteDoc, doc, onSnapshot, query, orderBy
+  getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, onSnapshot, query, orderBy
 } from 'firebase/firestore'
 
 const app = initializeApp({
@@ -25,6 +25,10 @@ export function subscribeTheories(callback) {
 
 export async function addTheoryToDb(theory) {
   await addDoc(theoriesRef, theory)
+}
+
+export async function updateTheoryInDb(firebaseId, data) {
+  await updateDoc(doc(db, 'theories', firebaseId), data)
 }
 
 export async function deleteTheoryFromDb(firebaseId) {

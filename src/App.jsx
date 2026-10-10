@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import defaultTheories from './theories'
-import { subscribeTheories, addTheoryToDb, deleteTheoryFromDb, seedDefaults } from './firebase'
+import { subscribeTheories, addTheoryToDb, updateTheoryInDb, deleteTheoryFromDb, seedDefaults } from './firebase'
 import './App.css'
 
 const PIN_COLORS = ['red', 'green', 'yellow', 'blue', 'white']
@@ -57,7 +57,7 @@ function NoteCard({ theory, index, onClick, onDelete }) {
   )
 }
 
-function Modal({ theory, onClose }) {
+function Modal({ theory, onClose, onEdit }) {
   if (!theory) return null
   return (
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
@@ -84,33 +84,39 @@ function Modal({ theory, onClose }) {
             </ul>
           </>
         )}
-        <div className="modal-meta">Filed {theory.dateAdded}</div>
+        <div className="modal-meta">
+          <span>Filed {theory.dateAdded}</span>
+          <button className="btn-edit" onClick={() => onEdit(theory)}>Edit</button>
+        </div>
       </div>
     </div>
   )
 }
 
-function AddForm({ onAdd, onCancel }) {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('government')
-  const [summary, setSummary] = useState('')
-  const [details, setDetails] = useState('')
-  const [evidence, setEvidence] = useState('')
-  const [status, setStatus] = useState('unproven')
+function TheoryForm({ initial, onSubmit, onCancel }) {
+  const editing = !!initial
+  const [title, setTitle] = useState(initial?.title || '')
+  const [category, setCategory] = useState(initial?.category || 'government')
+  const [summary, setSummary] = useState(initial?.summary || '')
+  const [details, setDetails] = useState(initial?.details || '')
+  const [evidence, setEvidence] = useState(
+    initial?.evidence ? initial.evidence.join('\n') : ''
+  )
+  const [status, setStatus] = useState(initial?.status || 'unproven')
   const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
     if (!title.trim() || !summary.trim() || submitting) return
     setSubmitting(true)
-    await onAdd({
+    await onSubmit({
       title: title.trim(),
       category,
       summary: summary.trim(),
       details: details.trim() || summary.trim(),
       evidence: evidence.trim() ? evidence.split('\n').map(l => l.trim()).filter(Boolean) : [],
       status,
-      dateAdded: new Date().toISOString().split('T')[0],
+      dateAdded: initial?.dateAdded || new Date().toISOString().split('T')[0],
     })
     setSubmitting(false)
   }
@@ -118,9 +124,9 @@ function AddForm({ onAdd, onCancel }) {
   return (
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onCancel() }}>
       <div className="modal-card add-form-card">
-        <div className="modal-stamp">New Intel</div>
+        <div className="modal-stamp">{editing ? 'Edit Intel' : 'New Intel'}</div>
         <button className="modal-close" onClick={onCancel}>&times;</button>
-        <h2>Pin to the Board</h2>
+        <h2>{editing ? 'Edit Note' : 'Pin to the Board'}</h2>
         <form onSubmit={handleSubmit}>
           <label className="form-label">
             Title *
@@ -159,7 +165,7 @@ function AddForm({ onAdd, onCancel }) {
           <div className="form-actions">
             <button type="button" className="btn-cancel" onClick={onCancel}>Cancel</button>
             <button type="submit" className="btn-submit" disabled={submitting}>
-              {submitting ? 'Pinning...' : 'Pin It'}
+              {submitting ? 'Saving...' : editing ? 'Save Changes' : 'Pin It'}
             </button>
           </div>
         </form>
@@ -175,6 +181,7 @@ export default function App() {
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState(null)
   const [showAdd, setShowAdd] = useState(false)
+  const [editing, setEditing] = useState(null)
 
   useEffect(() => {
     seedDefaults(defaultTheories)
@@ -195,13 +202,24 @@ export default function App() {
     return matchFilter && matchSearch
   })
 
-  async function addTheory(theory) {
-    await addTheoryToDb(theory)
+  async function addTheory(data) {
+    await addTheoryToDb(data)
     setShowAdd(false)
+  }
+
+  async function updateTheory(data) {
+    await updateTheoryInDb(editing.firebaseId, data)
+    setEditing(null)
+    setSelected(null)
   }
 
   async function deleteTheory(firebaseId) {
     await deleteTheoryFromDb(firebaseId)
+  }
+
+  function startEdit(theory) {
+    setSelected(null)
+    setEditing(theory)
   }
 
   return (
@@ -255,8 +273,15 @@ export default function App() {
         )}
       </div>
 
-      {selected && <Modal theory={selected} onClose={() => setSelected(null)} />}
-      {showAdd && <AddForm onAdd={addTheory} onCancel={() => setShowAdd(false)} />}
+      {selected && (
+        <Modal theory={selected} onClose={() => setSelected(null)} onEdit={startEdit} />
+      )}
+      {showAdd && (
+        <TheoryForm onSubmit={addTheory} onCancel={() => setShowAdd(false)} />
+      )}
+      {editing && (
+        <TheoryForm initial={editing} onSubmit={updateTheory} onCancel={() => setEditing(null)} />
+      )}
 
       <footer className="footer">
         pinned to the board — don't let them take it down.
