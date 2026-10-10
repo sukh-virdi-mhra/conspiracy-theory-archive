@@ -367,6 +367,18 @@
 
 .modal-card .note-category { margin-bottom: 12px; margin-top: 4px; }
 
+.modal-summary {
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2c1810;
+  line-height: 1.4;
+  padding: 10px 12px;
+  background: rgba(192, 40, 42, 0.06);
+  border-left: 3px solid #c0282a;
+  margin-bottom: 16px;
+}
+
 .modal-card .details {
   color: #3a3028;
   font-size: 0.86rem;

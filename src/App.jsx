@@ -69,7 +69,13 @@ function Modal({ theory, onClose }) {
         <div style={{ margin: '6px 0 12px' }}>
           <span className={`note-badge ${theory.status}`} style={{ position: 'static' }}>{theory.status}</span>
         </div>
-        <div className="details">{theory.details}</div>
+        <div className="modal-summary">{theory.summary}</div>
+        {theory.details && theory.details !== theory.summary && (
+          <>
+            <h3>Full Details</h3>
+            <div className="details">{theory.details}</div>
+          </>
+        )}
         {theory.evidence?.length > 0 && (
           <>
             <h3>Key Evidence</h3>
