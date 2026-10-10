@@ -6,211 +6,189 @@
   box-sizing: border-box;
 }
 
-:root {
-  --paper: #e8dcc8;
-  --paper-dark: #d4c5a9;
-  --paper-light: #f0e6d2;
-  --ink: #1a1a18;
-  --ink-faded: #3a3832;
-  --ink-light: #6b6555;
-  --red-stamp: #8b1a1a;
-  --red-stamp-light: #a63030;
-  --blue-ink: #1a2e5a;
-  --folder-tab: #c4a96a;
-  --manila: #d2b97e;
-  --bg: #2a2520;
-  --cabinet: #1e1b17;
-  --ring-stain: rgba(120, 90, 50, 0.12);
-}
-
 body {
   font-family: 'Courier Prime', 'Courier New', monospace;
-  background: var(--cabinet);
-  color: var(--ink);
+  background: #3b3730;
+  color: #1a1a18;
   line-height: 1.6;
   min-height: 100vh;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 40px,
-      rgba(0,0,0,0.03) 40px,
-      rgba(0,0,0,0.03) 41px
-    );
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='6' height='6' fill='%233b3730'/%3E%3Crect width='1' height='1' x='3' y='3' fill='%2334302a' fill-opacity='0.4'/%3E%3C/svg%3E");
 }
 
+/* === HEADER === */
 header {
-  background: var(--paper);
-  border-bottom: 3px double var(--ink);
+  background: #e8dcc8;
   padding: 2rem 1rem 1.5rem;
   text-align: center;
   position: relative;
+  border-bottom: 2px solid #1a1a18;
   background-image:
-    radial-gradient(ellipse at 75% 20%, var(--ring-stain) 0%, transparent 50%),
-    linear-gradient(to bottom, var(--paper-light), var(--paper));
+    radial-gradient(ellipse at 70% 30%, rgba(139, 109, 60, 0.08) 0%, transparent 50%);
 }
 
-header::before {
-  content: "TOP SECRET // SI // NOFORN";
-  display: block;
+.stamp-top {
   font-family: 'Courier Prime', monospace;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.3em;
-  color: var(--red-stamp);
-  border: 2px solid var(--red-stamp);
+  letter-spacing: 0.25em;
+  color: #8b1a1a;
+  border: 3px solid #8b1a1a;
   display: inline-block;
-  padding: 0.15rem 0.8rem;
-  margin-bottom: 1rem;
+  padding: 0.15rem 0.7rem;
   transform: rotate(-2deg);
-  opacity: 0.85;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
 header h1 {
-  font-family: 'Special Elite', 'Courier New', monospace;
-  font-size: 1.8rem;
+  font-family: 'Special Elite', monospace;
+  font-size: 1.6rem;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: #1a1a18;
+  margin-bottom: 0.25rem;
 }
 
-header p {
-  font-size: 0.8rem;
-  color: var(--ink-light);
-  margin-top: 0.3rem;
+header .subtitle {
+  font-size: 0.78rem;
+  color: #5a5548;
   font-style: italic;
 }
 
-header::after {
-  content: "CLASSIFICATION: ABOVE TOP SECRET — AUTHORISED PERSONNEL ONLY";
-  display: block;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--ink-light);
+.header-notice {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: #8b1a1a;
   margin-top: 1rem;
   text-transform: uppercase;
-}
-
-.controls {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 1.2rem 1rem 0.5rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.filter-btn {
-  font-family: 'Courier Prime', monospace;
-  background: var(--manila);
-  color: var(--ink-faded);
-  border: 1px solid var(--folder-tab);
-  padding: 0.3rem 0.8rem;
-  border-radius: 2px 2px 0 0;
-  cursor: pointer;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
   font-weight: 700;
-  transition: all 0.15s;
-  border-bottom: none;
-  position: relative;
-  top: 1px;
 }
 
-.filter-btn:hover {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.filter-btn.active {
-  background: var(--paper);
-  color: var(--red-stamp);
-  border-color: var(--ink-light);
-  border-bottom: 1px solid var(--paper);
-  z-index: 1;
+/* === SEARCH & FILTERS === */
+.search-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0;
 }
 
 .search-box {
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   margin: 0 auto 0.5rem;
   display: block;
-  padding: 0.5rem 0.8rem;
-  background: var(--paper-light);
-  border: 1px solid var(--ink-light);
-  border-radius: 0;
-  color: var(--ink);
+  padding: 0.45rem 0.7rem;
+  background: #ddd0b8;
+  border: 1px solid #8a7d68;
+  color: #1a1a18;
   font-family: 'Courier Prime', monospace;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 
 .search-box::placeholder {
-  color: var(--ink-light);
+  color: #7a7060;
   font-style: italic;
 }
 
 .search-box:focus {
   outline: none;
-  border-color: var(--ink);
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+  border-color: #1a1a18;
+}
+
+.controls {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem 1rem 0;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.filter-btn {
+  font-family: 'Courier Prime', monospace;
+  background: #c4b48e;
+  color: #5a5040;
+  border: 1px solid #a09070;
+  border-bottom: none;
+  padding: 0.25rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  border-radius: 0;
+  position: relative;
+  top: 1px;
+}
+
+.filter-btn:hover {
+  background: #d4c4a0;
+  color: #2a2520;
+}
+
+.filter-btn.active {
+  background: #e8dcc8;
+  color: #8b1a1a;
+  border-color: #8a7d68;
+  border-bottom: 1px solid #e8dcc8;
+  z-index: 2;
 }
 
 .counter {
   text-align: center;
-  color: var(--paper-dark);
-  font-size: 0.75rem;
-  padding: 0.8rem 0;
+  color: #9a9080;
+  font-size: 0.68rem;
+  padding: 0.8rem 0 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
 }
 
+/* === CARD GRID === */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.2rem;
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 0 1rem 3rem;
+  padding: 0.5rem 1rem 3rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 600px) {
   .grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 .card {
-  background: var(--paper);
-  border: 1px solid var(--ink-light);
-  padding: 1.5rem;
+  background: #e8dcc8;
+  border: 1px solid #a09070;
+  padding: 1.4rem 1.3rem;
   cursor: pointer;
-  transition: all 0.15s;
   position: relative;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.1s;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
   background-image:
-    radial-gradient(ellipse at 20% 80%, var(--ring-stain) 0%, transparent 45%),
-    linear-gradient(to bottom right, var(--paper-light), var(--paper), var(--paper-dark));
+    radial-gradient(ellipse at 25% 75%, rgba(120, 90, 50, 0.07) 0%, transparent 50%);
 }
 
-.card::before {
+.card::after {
   content: "";
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 25px 25px 0;
-  border-color: transparent var(--bg) transparent transparent;
-  filter: drop-shadow(-1px 1px 1px rgba(0,0,0,0.1));
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 6px;
+  background: rgba(160, 140, 100, 0.4);
+  border-radius: 1px;
 }
 
 .card:hover {
-  transform: translate(-1px, -2px);
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.4);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
 }
 
 .card-header {
@@ -218,76 +196,62 @@ header::after {
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.75rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .card h2 {
-  font-family: 'Special Elite', 'Courier New', monospace;
-  font-size: 1rem;
+  font-family: 'Special Elite', monospace;
+  font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.3;
-  color: var(--ink);
+  color: #1a1a18;
 }
 
 .badge {
   font-family: 'Courier Prime', monospace;
-  font-size: 0.6rem;
-  padding: 0.2rem 0.5rem;
+  font-size: 0.55rem;
+  padding: 0.15rem 0.4rem;
   white-space: nowrap;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   flex-shrink: 0;
   border: 2px solid;
-  transform: rotate(-3deg);
+  transform: rotate(-4deg);
   display: inline-block;
 }
 
-.badge-unproven {
-  border-color: var(--ink-light);
-  color: var(--ink-light);
-}
-
-.badge-debunked {
-  border-color: var(--red-stamp);
-  color: var(--red-stamp);
-}
-
-.badge-plausible {
-  border-color: var(--blue-ink);
-  color: var(--blue-ink);
-}
-
-.badge-confirmed {
-  border-color: var(--red-stamp);
-  color: #fff;
-  background: var(--red-stamp);
-}
+.badge-unproven { border-color: #7a6830; color: #7a6830; }
+.badge-debunked { border-color: #8b1a1a; color: #8b1a1a; }
+.badge-plausible { border-color: #1a2e5a; color: #1a2e5a; }
+.badge-confirmed { border-color: #8b1a1a; color: #fff; background: #8b1a1a; }
 
 .category-tag {
-  font-size: 0.65rem;
-  color: var(--ink-light);
+  font-size: 0.6rem;
+  color: #6b6050;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 0.4rem;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.35rem;
   font-weight: 700;
 }
 
 .category-tag::before {
-  content: "FILE: ";
+  content: "DOSSIER // ";
+  color: #8b1a1a;
 }
 
 .card p {
-  color: var(--ink-faded);
-  font-size: 0.82rem;
+  color: #4a4538;
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
 .card-date {
-  font-size: 0.7rem;
-  color: var(--ink-light);
-  margin-top: 0.75rem;
-  border-top: 1px dashed var(--ink-light);
-  padding-top: 0.5rem;
+  font-size: 0.65rem;
+  color: #7a7060;
+  margin-top: 0.6rem;
+  border-top: 1px solid #c4b48e;
+  padding-top: 0.4rem;
 }
 
 .card-date::before {
@@ -295,12 +259,12 @@ header::after {
   font-weight: 700;
 }
 
-/* Modal */
+/* === MODAL === */
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(10, 8, 5, 0.85);
+  background: rgba(20, 18, 14, 0.88);
   z-index: 100;
   justify-content: center;
   align-items: flex-start;
@@ -313,111 +277,106 @@ header::after {
 }
 
 .modal {
-  background: var(--paper);
-  border: 1px solid var(--ink-light);
-  max-width: 700px;
+  background: #e8dcc8;
+  border: 1px solid #8a7d68;
+  max-width: 680px;
   width: 100%;
   padding: 2.5rem 2rem 2rem;
   position: relative;
   margin-top: 2rem;
-  box-shadow: 4px 4px 20px rgba(0,0,0,0.5);
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.35);
   background-image:
-    radial-gradient(ellipse at 80% 15%, var(--ring-stain) 0%, transparent 40%),
-    radial-gradient(ellipse at 10% 90%, var(--ring-stain) 0%, transparent 50%),
-    linear-gradient(to bottom, var(--paper-light), var(--paper));
+    radial-gradient(ellipse at 80% 10%, rgba(120, 90, 50, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 15% 85%, rgba(120, 90, 50, 0.06) 0%, transparent 50%);
 }
 
-.modal::before {
-  content: "CLASSIFIED DOSSIER";
+.modal-stamp {
   position: absolute;
-  top: 0.8rem;
+  top: 0.7rem;
   left: 2rem;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  letter-spacing: 0.25em;
-  color: var(--red-stamp);
+  letter-spacing: 0.2em;
+  color: #8b1a1a;
   text-transform: uppercase;
+  border: 2px solid #8b1a1a;
+  padding: 0.1rem 0.5rem;
+  transform: rotate(-1deg);
 }
 
 .modal-close {
   position: absolute;
   top: 0.5rem;
-  right: 1rem;
+  right: 0.8rem;
   background: none;
   border: none;
-  color: var(--ink-light);
-  font-size: 1.5rem;
+  color: #7a7060;
+  font-size: 1.4rem;
   cursor: pointer;
   font-family: 'Courier Prime', monospace;
   line-height: 1;
 }
 
 .modal-close:hover {
-  color: var(--ink);
+  color: #1a1a18;
 }
 
 .modal h2 {
-  font-family: 'Special Elite', 'Courier New', monospace;
-  font-size: 1.4rem;
+  font-family: 'Special Elite', monospace;
+  font-size: 1.3rem;
   font-weight: 400;
+  color: #1a1a18;
+  padding-top: 0.8rem;
+  border-bottom: 2px solid #1a1a18;
+  padding-bottom: 0.4rem;
   margin-bottom: 0.25rem;
-  color: var(--ink);
-  padding-top: 0.5rem;
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 0.5rem;
 }
 
 .modal .category-tag {
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+  margin-top: 0.4rem;
 }
 
 .modal .details {
-  color: var(--ink-faded);
-  font-size: 0.88rem;
-  line-height: 1.8;
+  color: #3a3530;
+  font-size: 0.84rem;
+  line-height: 1.75;
   margin-bottom: 1.5rem;
 }
 
 .modal h3 {
-  font-family: 'Special Elite', 'Courier New', monospace;
-  font-size: 0.95rem;
-  margin-bottom: 0.75rem;
-  color: var(--ink);
+  font-family: 'Special Elite', monospace;
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem;
+  color: #1a1a18;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
 
 .evidence-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
   margin-bottom: 1.5rem;
 }
 
 .evidence-list li {
-  padding: 0.5rem 0.8rem;
-  background: rgba(0, 0, 0, 0.04);
-  border-left: 3px solid var(--red-stamp);
-  font-size: 0.82rem;
-  color: var(--ink-faded);
-}
-
-.evidence-list li::before {
-  content: "► ";
-  color: var(--red-stamp);
-  font-size: 0.7rem;
+  padding: 0.4rem 0.7rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-left: 3px solid #8b1a1a;
+  font-size: 0.78rem;
+  color: #4a4538;
 }
 
 .modal-meta {
   display: flex;
   gap: 1rem;
   align-items: center;
-  padding-top: 0.8rem;
-  border-top: 1px dashed var(--ink-light);
-  font-size: 0.75rem;
-  color: var(--ink-light);
+  padding-top: 0.7rem;
+  border-top: 1px solid #b5a88e;
+  font-size: 0.68rem;
+  color: #7a7060;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -425,17 +384,18 @@ header::after {
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: var(--paper-dark);
+  color: #8a8070;
   grid-column: 1 / -1;
   font-style: italic;
 }
 
 footer {
   text-align: center;
-  padding: 2rem 1rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  color: rgba(255,255,255,0.25);
-  font-size: 0.7rem;
+  padding: 1.5rem 1rem;
+  color: #6a6355;
+  font-size: 0.62rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
+  background: #e8dcc8;
+  border-top: 2px solid #1a1a18;
 }

@@ -9,13 +9,16 @@
 <body>
 
 <header>
+  <div class="stamp-top">TOP SECRET // SI // NOFORN</div>
   <h1>The Conspiracy Theory Archive</h1>
-  <p>Compiled from open-source intelligence &mdash; handle accordingly.</p>
+  <p class="subtitle">Compiled from open-source intelligence &mdash; handle accordingly.</p>
+  <div class="header-notice">Classification: above top secret &mdash; authorised personnel only</div>
 </header>
 
 <main>
-  <div style="max-width:900px;margin:0 auto;padding:1.2rem 1rem 0">
-    <input class="search-box" type="text" id="search" placeholder="Search the archives...">
+  <div class="search-wrap">
+    <label for="search" class="counter" style="display:block;margin-bottom:0.3rem">Search the archives</label>
+    <input class="search-box" type="text" id="search" placeholder="Enter query...">
   </div>
 
   <div class="controls" id="filters">
@@ -35,13 +38,14 @@
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
+    <div class="modal-stamp">Classified Dossier</div>
     <button class="modal-close" id="modal-close">&times;</button>
     <div id="modal-content"></div>
   </div>
 </div>
 
 <footer>
-  Her Majesty's Conspiracy Theory Archive &mdash; Unauthorised distribution is a violation of the Official Secrets Act.
+  Her Majesty's Conspiracy Theory Archive &mdash; Unauthorised distribution is a violation of the Official Secrets Act 1989.
 </footer>
 
 <script src="theories.js"></script>
