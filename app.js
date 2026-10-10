@@ -20,24 +20,26 @@ function renderCards() {
     return matchesFilter && matchesSearch;
   });
 
-  counter.textContent = `${filtered.length} ${filtered.length === 1 ? "dossier" : "dossiers"} on file`;
+  counter.textContent = `${filtered.length} pinned to the board`;
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state">No matching files found in the archives.</div>';
+    grid.innerHTML = '<div class="empty-state">Nothing here... or is there?</div>';
     return;
   }
 
   grid.innerHTML = filtered
     .map(
-      (t, i) => `
+      (t) => `
     <div class="card" data-index="${theories.indexOf(t)}">
-      <div class="category-tag">${t.category}</div>
-      <div class="card-header">
-        <h2>${t.title}</h2>
-        <span class="badge badge-${t.status}">${t.status}</span>
+      <div class="card-inner">
+        <div class="category-tag">${t.category}</div>
+        <div class="card-header">
+          <h2>${t.title}</h2>
+          <span class="badge badge-${t.status}">${t.status}</span>
+        </div>
+        <p>${t.summary}</p>
+        <div class="card-date">${t.dateAdded}</div>
       </div>
-      <p>${t.summary}</p>
-      <div class="card-date">Added ${t.dateAdded}</div>
     </div>`
     )
     .join("");
@@ -48,7 +50,7 @@ function renderCards() {
 }
 
 function openModal(t) {
-  const evidenceHtml = t.evidence && t.evidence.length
+  const evidenceHtml = t.evidence?.length
     ? `<h3>Intelligence Notes</h3>
        <ul class="evidence-list">
          ${t.evidence.map((e) => `<li>${e}</li>`).join("")}
@@ -58,14 +60,12 @@ function openModal(t) {
   modalContent.innerHTML = `
     <div class="category-tag">${t.category}</div>
     <h2>${t.title}</h2>
-    <div style="margin: 0.75rem 0">
+    <div style="margin: 0.5rem 0">
       <span class="badge badge-${t.status}">${t.status}</span>
     </div>
     <div class="details">${t.details}</div>
     ${evidenceHtml}
-    <div class="modal-meta">
-      <span>Added ${t.dateAdded}</span>
-    </div>`;
+    <div class="modal-meta">Filed ${t.dateAdded}</div>`;
 
   modal.classList.add("open");
   document.body.style.overflow = "hidden";

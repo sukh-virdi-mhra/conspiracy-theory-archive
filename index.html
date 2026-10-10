@@ -3,26 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classified Archives</title>
+  <title>The Conspiracy Theory Archive</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <div class="stamp-top">TOP SECRET // SI // NOFORN</div>
   <h1>The Conspiracy Theory Archive</h1>
-  <p class="subtitle">Compiled from open-source intelligence &mdash; handle accordingly.</p>
-  <div class="header-notice">Classification: above top secret &mdash; authorised personnel only</div>
+  <p class="subtitle">What are they hiding from us?</p>
+  <div class="red-string-divider"></div>
 </header>
 
 <main>
   <div class="search-wrap">
-    <label for="search" class="counter" style="display:block;margin-bottom:0.3rem">Search the archives</label>
-    <input class="search-box" type="text" id="search" placeholder="Enter query...">
+    <label for="search" style="display:none">Search</label>
+    <input class="search-box" type="text" id="search" placeholder="Search the board...">
   </div>
 
   <div class="controls" id="filters">
-    <button class="filter-btn active" data-filter="all">All Files</button>
+    <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="government">Government</button>
     <button class="filter-btn" data-filter="space">Space</button>
     <button class="filter-btn" data-filter="technology">Technology</button>
@@ -38,14 +37,14 @@
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <div class="modal-stamp">Classified Dossier</div>
+    <div class="modal-stamp">Classified</div>
     <button class="modal-close" id="modal-close">&times;</button>
     <div id="modal-content"></div>
   </div>
 </div>
 
 <footer>
-  Her Majesty's Conspiracy Theory Archive &mdash; Unauthorised distribution is a violation of the Official Secrets Act 1989.
+  pinned to the board &mdash; don't let them take it down.
 </footer>
 
 <script src="theories.js"></script>
