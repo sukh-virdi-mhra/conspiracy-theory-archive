@@ -4,23 +4,22 @@
 // Copy the template below and fill it in:
 //
 //   {
+//     id: 4,
 //     title: "Theory Name",
-//     category: "government",       // pick one: government, space, technology, history, science, other
-//     summary: "A short one-liner about the theory.",
-//     details: "The full write-up. Use as much text as you want.",
-//     evidence: [
-//       "First piece of evidence or talking point",
-//       "Second piece of evidence",
-//     ],
-//     status: "unproven",           // pick one: unproven, debunked, plausible, confirmed
+//     category: "government",
+//     summary: "A short one-liner.",
+//     details: "Full write-up.",
+//     evidence: ["Point one", "Point two"],
+//     status: "unproven",     // unproven | debunked | plausible | confirmed
 //     dateAdded: "2026-10-10",
 //   },
 //
-// Then save the file and push to GitHub — the site updates automatically.
+// Then save, commit, push — the site rebuilds automatically.
 // ============================================
 
 const theories = [
   {
+    id: 1,
     title: "Area 51 and Alien Technology",
     category: "government",
     summary: "The US government is hiding extraterrestrial spacecraft and alien remains at a secret base in Nevada.",
@@ -35,6 +34,7 @@ const theories = [
     dateAdded: "2026-10-10",
   },
   {
+    id: 2,
     title: "The Moon Landing Hoax",
     category: "space",
     summary: "NASA faked the Apollo moon landings in a film studio to win the Space Race.",
@@ -49,6 +49,7 @@ const theories = [
     dateAdded: "2026-10-10",
   },
   {
+    id: 3,
     title: "MKUltra Mind Control",
     category: "government",
     summary: "The CIA ran illegal mind control experiments on unwitting US and Canadian citizens.",
@@ -63,3 +64,5 @@ const theories = [
     dateAdded: "2026-10-10",
   },
 ];
+
+export default theories;
