@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import defaultTheories from './theories'
+import { subscribeTheories, addTheoryToDb, deleteTheoryFromDb, seedDefaults } from './firebase'
 import './App.css'
 
 const PIN_COLORS = ['red', 'green', 'yellow', 'blue', 'white']
@@ -18,18 +19,6 @@ const STRING_CONFIGS = [
 ]
 const CATEGORIES = ['all', 'government', 'space', 'technology', 'history', 'science', 'other']
 const STATUSES = ['unproven', 'debunked', 'plausible', 'confirmed']
-
-function loadTheories() {
-  try {
-    const saved = localStorage.getItem('conspiracy-theories')
-    if (saved) return JSON.parse(saved)
-  } catch { /* ignore */ }
-  return defaultTheories
-}
-
-function saveTheories(list) {
-  try { localStorage.setItem('conspiracy-theories', JSON.stringify(list)) } catch { /* ignore */ }
-}
 
 function PushPin({ index }) {
   return <div className={`pin ${PIN_COLORS[index % PIN_COLORS.length]}`} />
@@ -59,7 +48,7 @@ function NoteCard({ theory, index, onClick, onDelete }) {
       </div>
       <button
         className="delete-btn"
-        onClick={(e) => { e.stopPropagation(); onDelete(theory.id) }}
+        onClick={(e) => { e.stopPropagation(); onDelete(theory.firebaseId) }}
         title="Unpin from board"
       >
         &times;
@@ -102,12 +91,13 @@ function AddForm({ onAdd, onCancel }) {
   const [details, setDetails] = useState('')
   const [evidence, setEvidence] = useState('')
   const [status, setStatus] = useState('unproven')
+  const [submitting, setSubmitting] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    if (!title.trim() || !summary.trim()) return
-    onAdd({
-      id: Date.now(),
+    if (!title.trim() || !summary.trim() || submitting) return
+    setSubmitting(true)
+    await onAdd({
       title: title.trim(),
       category,
       summary: summary.trim(),
@@ -116,6 +106,7 @@ function AddForm({ onAdd, onCancel }) {
       status,
       dateAdded: new Date().toISOString().split('T')[0],
     })
+    setSubmitting(false)
   }
 
   return (
@@ -127,13 +118,7 @@ function AddForm({ onAdd, onCancel }) {
         <form onSubmit={handleSubmit}>
           <label className="form-label">
             Title *
-            <input
-              type="text"
-              className="form-input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="What's the theory?"
-            />
+            <input type="text" className="form-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="What's the theory?" />
           </label>
           <div className="form-row">
             <label className="form-label">
@@ -155,37 +140,21 @@ function AddForm({ onAdd, onCancel }) {
           </div>
           <label className="form-label">
             Summary *
-            <textarea
-              className="form-textarea"
-              rows={2}
-              value={summary}
-              onChange={(e) => setSummary(e.target.value)}
-              placeholder="One-liner about the theory"
-            />
+            <textarea className="form-textarea" rows={2} value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="One-liner about the theory" />
           </label>
           <label className="form-label">
             Full Details
-            <textarea
-              className="form-textarea"
-              rows={4}
-              value={details}
-              onChange={(e) => setDetails(e.target.value)}
-              placeholder="The full write-up (optional)"
-            />
+            <textarea className="form-textarea" rows={4} value={details} onChange={(e) => setDetails(e.target.value)} placeholder="The full write-up (optional)" />
           </label>
           <label className="form-label">
             Evidence (one per line)
-            <textarea
-              className="form-textarea"
-              rows={3}
-              value={evidence}
-              onChange={(e) => setEvidence(e.target.value)}
-              placeholder={"First piece of evidence\nSecond piece\nThird piece"}
-            />
+            <textarea className="form-textarea" rows={3} value={evidence} onChange={(e) => setEvidence(e.target.value)} placeholder={"First piece of evidence\nSecond piece\nThird piece"} />
           </label>
           <div className="form-actions">
             <button type="button" className="btn-cancel" onClick={onCancel}>Cancel</button>
-            <button type="submit" className="btn-submit">Pin It</button>
+            <button type="submit" className="btn-submit" disabled={submitting}>
+              {submitting ? 'Pinning...' : 'Pin It'}
+            </button>
           </div>
         </form>
       </div>
@@ -194,13 +163,21 @@ function AddForm({ onAdd, onCancel }) {
 }
 
 export default function App() {
-  const [theories, setTheories] = useState(loadTheories)
+  const [theories, setTheories] = useState([])
+  const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState(null)
   const [showAdd, setShowAdd] = useState(false)
 
-  useEffect(() => { saveTheories(theories) }, [theories])
+  useEffect(() => {
+    seedDefaults(defaultTheories)
+    const unsub = subscribeTheories((list) => {
+      setTheories(list)
+      setLoading(false)
+    })
+    return unsub
+  }, [])
 
   const query = search.toLowerCase().trim()
   const filtered = theories.filter((t) => {
@@ -208,17 +185,17 @@ export default function App() {
     const matchSearch = !query
       || t.title.toLowerCase().includes(query)
       || t.summary.toLowerCase().includes(query)
-      || t.details.toLowerCase().includes(query)
+      || (t.details || '').toLowerCase().includes(query)
     return matchFilter && matchSearch
   })
 
-  function addTheory(theory) {
-    setTheories(prev => [...prev, theory])
+  async function addTheory(theory) {
+    await addTheoryToDb(theory)
     setShowAdd(false)
   }
 
-  function deleteTheory(id) {
-    setTheories(prev => prev.filter(t => t.id !== id))
+  async function deleteTheory(firebaseId) {
+    await deleteTheoryFromDb(firebaseId)
   }
 
   return (
@@ -248,19 +225,21 @@ export default function App() {
             </button>
           ))}
         </div>
-        <div className="board-count">{filtered.length} pinned to the board</div>
+        <div className="board-count">
+          {loading ? 'Loading the board...' : `${filtered.length} pinned to the board`}
+        </div>
         <button className="add-btn" onClick={() => setShowAdd(true)}>
           + Pin New Note
         </button>
       </div>
 
       <div className="board">
-        {filtered.length === 0 ? (
+        {loading ? null : filtered.length === 0 ? (
           <div className="empty-state">Nothing here... or is there?</div>
         ) : (
           filtered.map((t, i) => (
             <NoteCard
-              key={t.id}
+              key={t.firebaseId}
               theory={t}
               index={i}
               onClick={() => setSelected(t)}
