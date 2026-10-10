@@ -38,6 +38,7 @@ const CATEGORIES = [
   "science",
   "religion",
   "sea",
+  "Jews",
   "other",
 ];
 const STATUSES = ["unproven", "debunked", "plausible", "confirmed"];
