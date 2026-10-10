@@ -253,14 +253,17 @@
   font-weight: 700;
   line-height: 1.15;
   color: #1a1410;
+  padding-bottom: 6px;
   margin-bottom: 6px;
+  border-bottom: 1px dashed rgba(0,0,0,0.15);
 }
 
 .note-summary {
   font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: #3a3028;
+  font-size: 0.95rem;
+  color: #4a4038;
   line-height: 1.3;
+  font-style: italic;
 }
 
 .note-badge {
