@@ -20,10 +20,10 @@ function renderCards() {
     return matchesFilter && matchesSearch;
   });
 
-  counter.textContent = `${filtered.length} ${filtered.length === 1 ? "theory" : "theories"}`;
+  counter.textContent = `${filtered.length} ${filtered.length === 1 ? "dossier" : "dossiers"} on file`;
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state">No theories found.</div>';
+    grid.innerHTML = '<div class="empty-state">No matching files found in the archives.</div>';
     return;
   }
 
@@ -49,7 +49,7 @@ function renderCards() {
 
 function openModal(t) {
   const evidenceHtml = t.evidence && t.evidence.length
-    ? `<h3>Evidence & Talking Points</h3>
+    ? `<h3>Intelligence Notes</h3>
        <ul class="evidence-list">
          ${t.evidence.map((e) => `<li>${e}</li>`).join("")}
        </ul>`
