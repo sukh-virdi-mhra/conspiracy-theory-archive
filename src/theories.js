@@ -79,7 +79,7 @@ const defaultTheories = [
   {
     id: 6,
     title: "The Book of Enoch Cover-Up",
-    category: "history",
+    category: "religion",
     summary: "The Book of Enoch was deliberately removed from the Bible because it reveals too much about fallen angels, the Nephilim, and forbidden knowledge.",
     details: "The Book of Enoch is an ancient Jewish text attributed to Enoch, the great-grandfather of Noah. It describes in vivid detail the Watchers — fallen angels who descended to Earth, took human wives, and produced the Nephilim, a race of giants. The text also claims these angels taught humanity forbidden arts: weapon-making, sorcery, astrology, and cosmetics. Despite being quoted in the New Testament Book of Jude and clearly influential on early Christian theology, the Book of Enoch was excluded from the biblical canon by the Council of Laodicea in 364 AD. Conspiracy theorists argue the book was suppressed because its detailed account of angelic rebellion, hybrid bloodlines, and pre-flood civilisation threatened the established religious and political order. The Ethiopian Orthodox Church is the only major denomination that still includes it in their canon. The Dead Sea Scrolls discovery in 1947 confirmed the text's antiquity, with fragments dating to the 3rd century BC.",
     evidence: [

@@ -17,7 +17,7 @@ const STRING_CONFIGS = [
   { top: '-5px', left: '20%', width: '50px', rotate: '-25deg' },
   null,
 ]
-const CATEGORIES = ['all', 'government', 'space', 'technology', 'history', 'science', 'other']
+const CATEGORIES = ['all', 'government', 'space', 'technology', 'history', 'science', 'religion', 'other']
 const STATUSES = ['unproven', 'debunked', 'plausible', 'confirmed']
 
 function PushPin({ index }) {
