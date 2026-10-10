@@ -369,6 +369,7 @@
   font-size: 0.86rem;
   line-height: 1.75;
   margin-bottom: 1.2rem;
+  white-space: pre-line;
 }
 
 .modal-card h3 {
