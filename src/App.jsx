@@ -39,6 +39,8 @@ const CATEGORIES = [
   "religion",
   "sea",
   "zionist",
+  "mafia",
+  "deaths",
   "other",
 ];
 const STATUSES = ["unproven", "debunked", "plausible", "confirmed"];
