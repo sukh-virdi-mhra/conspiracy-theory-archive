@@ -41,7 +41,7 @@ const CATEGORIES = [
   "zionist",
   "mafia",
   "deaths",
-  "ghosts",
+  "paranormal",
   "monsters",
 ];
 const STATUSES = ["unproven", "debunked", "plausible", "confirmed"];
