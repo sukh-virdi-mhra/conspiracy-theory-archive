@@ -1,5 +1,16 @@
 # React + Vite
 
+## GitHub Pages deployment
+
+Before running the deployment workflow, a repository administrator must enable
+GitHub Pages in **Settings → Pages** and select **GitHub Actions** as the
+**Build and deployment → Source**. The workflow's `GITHUB_TOKEN` cannot enable
+a missing Pages site.
+
+The workflow checks the Pages configuration before building and deploys `dist`
+on pushes to `main`. If deployment fails with `Failed to create deployment
+(status: 404)`, verify this repository setting, then re-run the failed workflow.
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:
